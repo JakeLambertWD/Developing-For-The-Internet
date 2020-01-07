@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="week10_files/dfti0910.css">
+<style type="text/css">
+body { font-size: 80%}
+</style>
+</head><body>
+<div id="sidebar">
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/index.php?unit=dfti">DFTI</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/wad/">WAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/mad/">MAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/ema/">EMA</a>
+</div>
+<div id="main">
+
+<div class="subtitle"><h1>JSON and Web Services</h1></div><hr><p>Page 1</p><h1>JSON and Web Services</h1>
+<ul>
+<li>What is a web service?</li>
+<li>Differences between web services and web applications</li>
+<li>Why use web services?</li>
+<li>JSON</li>
+</ul>
+<hr><p>Page 2</p><h1>What is a web service?</h1>
+<ul>
+<li>A script or program running on a server which sends back 
+<em>pure data</em> (as opposed to HTML pages) to clients over HTTP, in
+response to HTTP requests</li>
+</ul>
+<hr><p>Page 3</p><h1>How is information sent back from web services?</h1>
+<ul>
+<li><em>XML</em> - tag-based format for representing data</li>
+<li><em>JSON</em> - data format using JavaScript syntax</li>
+<li><strong>JSON is now the leading format</strong>, so we will focus on
+JSON in this session</li>
+</ul>
+<hr><p>Page 4</p><h1>Differences between web services and standard web
+applications</h1>
+<ul>
+<li>A web service is similar to a standard PHP-based website 
+(web application) in that it responds to HTTP requests from clients</li>
+<li>However, there is a fundamental difference ....</li>
+<li>A standard web application is intended for the end user, and
+generates <em>HTML</em></li>
+<li>A web service, on the other hand, is intended for use by 
+<em>other applications</em>, not end users</li>
+<li>These applications can include other websites, or even standalone
+programs</li>
+<li>Such applications are called <em>web service clients</em> as they
+make a request to the web service over the network</li>
+</ul>
+<hr><p>Page 5</p><h1>JSON - JavaScript Object Notation</h1>
+<ul>
+<li>JSON uses JavaScript syntax (hence the name) to represent data as it gets sent across the web.</li>
+<li>
+With JSON we represent a single entity (such as a person, a song or a film)
+using curly brackets {}</li>
+<li> and we represent a collection of entities (an array) using square brackets [].</li>
+<li>Each entity is called a JSON <em>object</em> while a collection of
+entities is called a JSON <em>array</em>. 
+</li>
+</ul>
+<hr><p>Page 6</p><h1>Example of a JSON object</h1>
+<p>Here is an example of a JSON object representing a single student.
+</p><pre>{ 
+    "name": "Tim Smith",
+    "username": "2smitt82",
+    "course": "Computer Studies"
+}
+</pre>
+<p></p>
+<ul>
+<li>
+Note how the JSON object representing the student is defined by curly brackets { and }, and inside the curly
+bracket, we specify each property of the student (name, username and course) and the
+corresponding value ("Tim Smith", "2smitt82", and "Computer Studies", respectively).</li>
+<li> A colon (:) 
+separates the property and the value, and a comma separates each property/value pair.</li>
+</ul>
+<hr><p>Page 7</p><h1>A JSON array of objects</h1>
+<p>The next example shows a <em>collection (array) of students</em>. Note how we use the JSON array syntax [ and ] to
+define the collection, how each individual student object is represented by curly brackets { and }, and
+how each student object within the array is separated by a comma.
+</p><pre>[
+    { 
+      "name": "Tim Smith",
+      "username": "2smitt82",
+      "course": "Computer Studies"
+    },
+
+    {
+      "name": "Jamie Bailey",
+      "username": "1bailj39",
+      "course": "Computer Studies"
+    },
+
+    {
+      "name": "Deep Patel",
+      "username": "0pated61",
+      "course": "Networks and Web Design"
+    }
+]
+</pre>
+<p></p>
+<hr><p>Page 8</p><h1>Web services and HTTP</h1>
+<img src="week10_files/webservices_json.png" alt="web services, JSON and HTTP">
+<br>
+<hr><p>Page 9</p><h1>Example of web services</h1>
+<ul>
+<li>A web service could provide weather information for a particular
+city
+    <ul>
+    <li>The client could send the city to the web service, which could respond
+    with JSON containing the weather for that city back to the client</li>
+    </ul>
+</li>
+<li>A web service could provide train times
+    <ul>
+    <li>The client could send the starting station, the finishing station,
+    the date and the time, and the web service could respond with JSON 
+    containing all matching trains</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 10</p><h1>Example web service clients</h1>
+<ul>
+<li>Other websites
+    <ul>
+    <li>A tourist site for a given city could retrieve the weather
+    for that city from the web service and incorporate it into its own site</li>
+    <li>A Paris tourist website aimed at UK visitors could contact the 
+train times web service to show all trains from London to Paris within 
+the site</li>
+    </ul>
+</li>
+<li>Phone apps
+    <ul>
+    <li>A mobile phone application for Android or iOS could contact the weather web service to 
+    look up the weather for the city the user is currently in, and display it</li>
+    <li>Another mobile phone application could look up train times for the user by contacting the train times web service</li>
+    </ul>
+</li>
+<li>Other standalone applications
+    <ul>
+    <li>A desktop booking application for Windows, Linux or Mac in a 
+ticket office could contact the trains web service to look up train 
+times for
+    the customer</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 11</p><h1>Why web services?</h1>
+<ul>
+<li>Another option would be for the web services to return
+the information as <em>HTML</em> as in a normal web application</li>
+</ul>
+<ol>
+<li>What advantages are there in providing an JSON web service instead?</li>
+<li>Why might a client website (e.g. the Paris tourist board site,
+above) use the web services rather than providing 
+chart searches and biographies itself?</li>
+</ol>
+<hr><p>Page 12</p><h1>Why web services? - Answer to Question 1</h1>
+<ul>
+<li>HTML assumes that the end user is using a browser, and that
+the data is to be displayed as a complete web page</li>
+<li>By returning JSON instead, the web service is returning <em>pure data</em>
+    <ul>
+    <li>Does not force a certain web page structure on the user of the web
+    service; the user of the web service can process the data how they want</li>
+    <li>e.g. a client website can style the data using its own look and
+    feel, rather than that of the web service provider</li>
+    <li>Makes no assumptions about what software the end user is using;
+    a standalone mobile phone or
+    desktop application could use the JSON just as a web
+    browser could</li>
+    <li>Easy to pull out the data we're interested in: JSON and XML are
+    concise, and unlike HTML, do not contain large amounts of formatting
+    or styling</li>
+    <li>The JSON data could be seamlessly integrated into the user interface
+    of the phone or desktop application, as it's just pure data</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 13</p><h1>Why web services? - Answer to Question 2</h1>
+<ul>
+<li><em>Many</em> different client websites and applications can call upon 
+<em>one</em> web service</li>
+<li>e.g. many websites (not just the Paris tourist site) could call upon
+the trains web service to look up train times</li> 
+<li>We have one <em>centralised</em> web service which can be
+<em>reused</em> by other websites</li>
+<li>Lessens maintenance effort, e.g. if train times change, only the web
+service provider need change anything</li>
+</ul>
+<hr><p>Page 14</p><h1>Disadvantages of web services</h1>
+<ul>
+<li>By using a web service you're relying on the data to be accurate;
+you might not be able to correct mistakes in the data is it's provided
+by someone else</li>
+<li><strong>Server load:</strong> one centralised provider being contacted
+by many clients could easily become overloaded with requests and run out of
+memory
+    <ul>
+    <li>Because of this, web service providers often provide the data for
+    download so that "mirrors" of the web service can be set up to spread
+    the load</li>
+    <li>Obviously though, this removes the advantage of web services
+    involving less maintenance effort</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 15</p><h1>Example of web service: OpenStreetMap</h1>
+<ul>
+<li><em>OpenStreetMap (OSM)</em> 
+(see <a href="http://www.openstreetmap.org/">here</a>)
+is a project to provide free mapping data</li>
+<li>OSM provides map data through a web service, as XML
+(an alternative, tag-based format to JSON)</li>
+<li>Other websites can call OSM and present the map data to the
+end user as they see fit</li>
+<li>Thus different mapping websites can all call the OSM web service
+but present the map data to users in different ways, by processing the XML
+differently</li>
+</ul>
+<hr><p>Page 16</p><h1>Example JSON-based web service</h1>
+<ul>
+<li>On my own server (free-map.org.uk) I am hosting a web service for
+various uses (I will demo this in class)</li>
+<li>This web service sends back OpenStreetMap data as JSON to clients and I am using it personally
+for:
+    <ul>
+    <li><em>Freemap</em> - PHP and AJAX based mapping site</li>
+    <li><em>OpenTrail</em> - Android mapping app</li>
+    <li><em>Hikar</em> - augmented reality app for walkers, showing 
+    OpenStreetMap data in 3D</li>
+    </ul>
+</li>
+<li>Note how <em>multiple applications are using the same web service, and
+presenting the data completely differently</em></li>
+</ul>
+<hr><p>Page 17</p><h1>JSON parsing</h1>
+<ul>
+<li>How do we <em>process</em> JSON returned from a web service?</li>
+<li>We need to <em>parse</em> the JSON</li>
+<li>To <em>parse</em> JSON means to convert it to PHP arrays and
+objects, which can then be used from our client</li>
+<li><em>json_parse()</em> in PHP will parse the JSON into the 
+equivalent PHP arrays and objects</li>
+</ul>
+<hr><p>Page 18</p><h1>Example with PHP objects</h1>
+<pre>&lt;?php
+// Some example JSON - in a string
+// In a real application, this would be loaded from the web
+$json = '['.
+    '{"name" : "Barack Obama", "age" : 55, "nationality" : "US", "job": "Former President"},'.
+    '{"name" : "Hillary Clinton", "age" : 68, "nationality" : "US",  "job": "Presidential candidate 2016" },'.
+    '{"name" : "Bernie Sanders", "age" : 77, "nationality" : "US",  "job": "Potential presidential candidate 2020" }'.
+']';
+
+// Parse the JSON
+// $data will be a PHP array of PHP objects, each object representing a politician.
+$data = json_decode($json);
+
+// Use a 'for' loop to loop through each object in the JSON and
+// display its details.
+// count() returns the number of elements in an array.
+for($i=0; $i&lt;count($data); $i++)
+{
+    echo "Name " . $data[$i]-&gt;name . " " .
+         "Age " . $data[$i]-&gt;age . " " .
+         "Nationality " . $data[$i]-&gt;nationality . " " .
+         "Job " . $data[$i]-&gt;job . "&lt;br/&gt;";
+}
+?&gt;
+</pre>
+<hr><p>Page 19</p><h1>Communicating with a remote web service from PHP</h1>
+<ul>
+<li>There are various ways of communicating with a remote web service from
+PHP, the easiest is to use the <em>file_get_contents()</em> function:
+<pre>$response = file_get_contents("http://remoteserver.example.com/webservice.php");
+</pre>
+</li>
+<li><em>$response</em> can then be parsed using <em>json_decode()</em>,
+as above</li>
+</ul>
+<hr><p>Page 20</p><h1>Finally... a hint</h1>
+<ul>
+<li>This is not related to the current topic, but you might find it useful
+for question i) in the assignment</li>
+<li>You can add an <em>onclick</em> event to any page element, not just buttons</li>
+<li>e.g.
+<pre> &lt;div id="div1" <em>onclick="handleClick()"</em>&gt;This is div1&lt;/div&gt;</pre>
+</li>
+<li>This will result in the function <em>handleClick()</em> running when the user clicks the div</li>
+<li>You can pass parameters to the function; see the advanced
+section of the AJAX exercise (Worksheet 7) for more on this</li>
+</ul>
+<hr><div id="nav">
+		<a href="https://edward2.solent.ac.uk/course/index.php">
+		<img src="week10_files/home.png" alt="Home">
+		</a>
+		</div>
+		<em>Font size:</em> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture10.xml&amp;unit=dfti&amp;fs=60">Small</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture10.xml&amp;unit=dfti&amp;fs=80">Normal</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture10.xml&amp;unit=dfti&amp;fs=100">Large</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture10.xml&amp;unit=dfti&amp;fs=120">V.large</a> <p></p>
+
+
+</div></body></html>

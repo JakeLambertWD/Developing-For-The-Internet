@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="week2_files/dfti0910.css">
+<style type="text/css">
+body { font-size: 80%}
+</style>
+</head><body>
+<div id="sidebar">
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/index.php?unit=dfti">DFTI</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/wad/">WAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/mad/">MAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/ema/">EMA</a>
+</div>
+<div id="main">
+
+<div class="subtitle"><h1>Server side scripts: introduction</h1></div><hr><p>Page 1</p><h1>Dynamic websites</h1>
+<ul>
+<li>Many websites are <em>dynamic</em></li>
+<li>Dynamic websites <em>change their content</em> according to user input,
+or the contents of a database</li>
+<li>Examples: flight booking, hotel booking, social networking</li>
+</ul>
+<hr><p>Page 2</p><h1>How do you write dynamic web pages?</h1>
+<ul>
+<li>Use <em>server side scripting</em></li>
+<li>Dynamic web pages written using technologies such as PHP and ASP</li>
+<li>Stored on the web server machine on the website</li>
+<li>Require a server software environment (e.g. Apache, IIS) to run</li>
+</ul>
+<hr><p>Page 3</p><h1>Form data and server-side scripts</h1>
+<ul>
+<li>User fills in form data</li>
+<li>An HTTP request <em>containing the form data</em> is sent across to the
+server software (e.g. Apache) running on the server machine</li>
+<li>The server software then passes on the form data to the 
+specified server-side script</li>
+<li>The form's <em>action</em> specifies the server-side script to send the
+form data to e.g.
+<pre>&lt;form method="get" action="flights.php"&gt;</pre>
+</li>
+</ul>
+<hr><p>Page 4</p><h1>Server side scripts</h1>
+<img src="week2_files/serverscripts1.png" alt="Server-side scripts">
+<hr><p>Page 5</p><h1>Server-side scripts generate HTML</h1>
+<ul>
+<li>Server side scripts <em>dynamically generate HTML</em></li>
+<li>Different HTML can be produced, depending on the conditions</li>
+<li>For example, if there were flights available on a given date,
+an HTML page listing the flights could be generated</li>
+<li>while if there were no flights available, an HTML page reading
+"No flights available!" could be generated</li>
+</ul>
+<hr><p>Page 6</p><h1>A First PHP Script</h1>
+<pre><span class="php">&lt;?php
+echo "&lt;p&gt;Hello from PHP! &lt;/p&gt;";
+?&gt;</span></pre>
+<ul>
+<li>A PHP script begins with <code>&lt;?php</code> and ends with
+<code>?&gt;</code></li>
+<li><em>echo</em> sends the HTML enclosed
+within the quotes back to the client PC</li>
+<li>PHP scripts are saved on the server with the extension
+<em>.php</em></li>
+<li>Typing a PHP script's URL e.g. 
+<pre>http://www.server.com/dfti/week11/hello.php</pre>
+will send an HTTP request to the server software to run the PHP script and send the
+results back to the browser</li>
+<li>The above PHP script will send the following HTML to the
+client browser:
+<pre>&lt;p&gt;Hello from PHP!&lt;/p&gt;
+</pre>
+</li>
+</ul>
+<hr><p>Page 7</p><h1>PHP variables</h1>
+<ul>
+<li>Specified using the dollar symbol ($) plus a name</li>
+<li>The name must begin with a letter or underscore, and contain only letters, underscores or numbers</li>
+<li>Can be used to store different <em>data types</em>: e.g.
+numbers (integers and floating point), strings, and boolean 
+(true/false) values</li>
+<li>Like in JavaScript variables do not have to be declared as a
+specific data type; one variable can store any data type</li>
+<li>Names are case sensitive</li>
+<li>Valid variables: $a, $b123, $_hello</li>
+<li>Invalid variables: $COOL!, $3bears</li>
+</ul>
+<hr><p>Page 8</p><h1>PHP variables example</h1>
+<pre><span class="php">&lt;?php
+$a = 1;
+$b = 2;
+$c = $a + $b;
+echo "&lt;p&gt;The sum of $a and $b is $c&lt;/p&gt;";
+?&gt;
+</span></pre>
+<ul>
+<li>This script stores the values 1 and 2 in the variables $a and $b, adds them together and stores the result in $c</li>
+<li>Note that this calculation is <em>all done on the server
+side</em></li>
+<li>All the client PC ever sees is the result of the calculation
+output as HTML:
+<pre>&lt;p&gt;The sum of 1 and 2 is 3&lt;/p&gt;
+</pre>
+</li>
+</ul>
+<hr><p>Page 9</p><h1>Mixing HTML and PHP</h1>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;PHP Script to add 1 and 2&lt;/h1&gt;
+<span class="php">&lt;?php
+$a = 1;
+$b = 2;
+$c = $a + $b;
+echo "&lt;p&gt;The sum of $a and $b is $c&lt;/p&gt;";
+?&gt;</span>
+&lt;/body&gt; &lt;/html&gt;
+</pre>
+<ul>
+<li>We can mix PHP and straight HTML in a PHP script</li>
+<li>Everything between <em>&lt;?php</em> and
+<em>?&gt;</em> is processed by the PHP interpreter</li>
+<li>Everything outside the PHP tags is simply sent straight back to
+the client PC as regular HTML</li>
+<li>Thus the above script will generate the following HTML:
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;PHP Script to add 1 and 2&lt;/h1&gt;
+&lt;p&gt;The sum of 1 and 2 is 3&lt;/p&gt;
+&lt;/body&gt; &lt;/html&gt;
+</pre>
+</li>
+<li><em>See
+<a href="https://edward2.solent.ac.uk/course/dfti/examples/basic/addition.php">here</a>
+to see script running</em>
+</li>
+</ul>
+<hr><p>Page 10</p><h1>Sending form data to a PHP script</h1>
+<pre>&lt;form method="get" action="hello.php"&gt;
+Enter your name:
+&lt;input name="name" /&gt;
+Enter your age:
+&lt;input name="age" /&gt;
+&lt;input type="submit" value="Go!"/&gt;
+&lt;/form&gt;</pre>
+<ul>
+<li>The <em>action</em> specifies the PHP script to send the form
+data to</li>
+<li>Note that we give each field a <em>name</em>: this allows the
+PHP script to identify each input element</li>
+<li>The form has a <em>method</em> of <em>get</em> which is the default
+    <ul>
+    <li>There is another method (<em>post</em>) used when data from a form is used
+    to <em>modify a database</em>: we will come on to this later</li>
+    </ul>
+</li>
+<li>Forms with a method of <em>get</em> will result in an HTTP request (see last week)
+with a type of <em>GET</em>, which is an instruction to the server to
+<em>GET</em> information</li>
+<li>Note that data from a form with a method of <em>get</em> will appear in the URL and thus 
+<em>get</em> should not be used for sensitive data</li>
+</ul>
+<hr><p>Page 11</p><h1>Responding to form data in PHP</h1>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+<span class="php">&lt;?php
+$n = $_GET["<em>name</em>"];
+$a = $_GET["<em>age</em>"];
+echo "&lt;h1&gt;Hello $n!&lt;/h1&gt;";
+echo "&lt;p&gt;Your age is : $a!&lt;/p&gt;";
+?&gt;
+</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<ul>
+<li>We use the special variable <em>$_GET</em></li>
+<li>To obtain what the user entered in each form field, we place
+the <em>name</em> of each field within the brackets following
+<em>$_GET</em></li>
+<li>It's $_GET because the form had a method of "get"</li>
+<li>
+<em>See 
+<a href="https://edward2.solent.ac.uk/course/dfti/examples/basic/form.html">here</a>
+</em> (link is to the form, PHP script runs when you fill in the form
+and click Go!)</li>
+</ul>
+<hr><p>Page 12</p><h1>Loops and conditional statements in PHP</h1>
+<ul>
+<li>The following are available to us in PHP:
+    <ul>
+    <li>Arithmetic expressions</li>
+    <li>Loops: for, while, do</li>    
+    <li>Conditional statements: if/else, switch</li>
+    </ul>
+</li>
+<li>Syntax is basically the same as in JavaScript</li>
+</ul>
+<hr><p>Page 13</p><h1>Example of loops in PHP</h1>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt; PHP Loops &lt;/h1&gt;
+<span class="php">&lt;?php
+
+// Calculate squares of 0 to 9. Remember $a++ increases $a by 1.
+
+// using while loop
+echo "&lt;h2&gt; Using while loop &lt;/h2&gt;";
+$a = 0;
+while ($a &lt; 10)
+{
+    $b=$a*$a;
+    echo "$a squared is $b&lt;br /&gt;";
+    $a++;
+}
+
+// using for loop
+echo "&lt;h2&gt; Using for loop &lt;/h2&gt;";
+for ($a=0; $a&lt;10; $a++) 
+{
+    $b=$a*$a;
+    echo "$a squared is $b&lt;br /&gt;";
+}
+?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><em>See
+<a href="https://edward2.solent.ac.uk/course/dfti/examples/basic/loops.php">here</a> to 
+see script running</em>
+</p>
+<hr><p>Page 14</p><h1>Example of conditional statement (if) in PHP</h1>
+<p>A modified version of the basic form example above</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+<span class="php">&lt;?php
+$n = $_GET["<em>name</em>"];
+$a = $_GET["<em>age</em>"];
+
+if ($n == "") // if $n equals a blank string, i.e. no name was entered
+{
+    echo "Please enter a name! &lt;br /&gt;";
+}
+else
+{
+    echo "&lt;h1&gt;Hello $n!&lt;/h1&gt;";
+    echo "&lt;p&gt;Your age is : $a!&lt;/p&gt;";
+}
+?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<hr><p>Page 15</p><h1>Using and/or</h1>
+<ul>
+<li>As in other languages, we can <em>combine conditions</em> by using
+the "and" (&amp;&amp;) and "or" (||) operators</li>
+<li>For example:
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+<span class="php">&lt;?php
+$n = $_GET["<em>name</em>"];
+$a = $_GET["<em>age</em>"];
+
+// If name is blank OR age is blank
+if ($n == "" || $a == "") 
+{
+    echo "Either the name, the age, or both is missing. &lt;br /&gt;";
+}
+else
+{
+    echo "&lt;h1&gt;Hello $n!&lt;/h1&gt;";
+    echo "&lt;p&gt;Your age is : $a!&lt;/p&gt;";
+}
+?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</li>
+<li><em>See
+<a href="https://edward2.solent.ac.uk/course/dfti/examples/basic/form2.html">here</a>
+</em> (link is to form, script runs when you fill in the form and
+click Go!</li>
+</ul>
+<hr><p>Page 16</p><h1>elseif</h1>
+<ul>
+<li>Occasionally we might want to do a
+<em>multiple if/else</em>
+	<ul>
+	<li>There might be a situation where we
+	want to say "if this, do that, otherwise if
+	this,  do something else, otherwise, do something else again"</li>
+	</ul>
+</li>
+<li>We can use the <em>elseif</em> keyword (you can also write
+"else if" as separate words) to do this</li>
+<li>e.g:
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;PHP Test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+<span class="php">&lt;?php
+$n = $_GET["<em>name</em>"];
+$a = $_GET["<em>age</em>"];
+
+if ($a &lt; 16)
+{
+    echo "Too young!";
+}
+elseif ($a &gt; 130)
+{
+    echo "Don't be silly!";
+}
+else
+{
+    echo "&lt;h1&gt;Hello $n!&lt;/h1&gt;";
+    echo "&lt;p&gt;Your age is : $a!&lt;/p&gt;";
+}
+?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</li>
+</ul>
+<hr><p>Page 17</p><h1>GET vs POST methods</h1>
+<ul>
+<li>So far, all the forms we have looked at have a <em>method</em> of
+<em>"get"</em> and are read from PHP using <em>$_GET</em></li>
+<li>By convention forms with a method of <em>"get"</em> are used when we
+want to <em>look up</em> information (e.g. a search)</li>
+<li>However, 
+forms which connect to a PHP script which <em>adds</em> or <em>updates</em>
+data, use a method of <em>"post"</em> by convention</li>
+<li>... and are read from PHP using <em>$_POST</em></li>
+<li>For example, imagine a form to add a student mark to a database:
+<pre>&lt;form method="post" action="addmark.php"&gt;
+Name: &lt;input name="name" /&gt;  &lt;br /&gt;
+Unit: &lt;input name="unit" /&gt; &lt;br /&gt;
+Mark: &lt;input name="mark" /&gt; &lt;br /&gt;
+&lt;input type="submit" value="Go!" /&gt; &lt;br /&gt;
+&lt;/form&gt;
+</pre>
+This might be read in as follows:
+<pre>&lt;?php
+$a = $_POST["name"];
+$b = $_POST["unit"];
+$c = $_POST["mark"];
+// code to add the name, unit and mark to database (not shown) follows...
+?&gt;
+</pre>
+</li>
+<li>Data sent using GET is added to the end of the URL (what we call a
+<em>query string</em>) while POST data is hidden within the HTTP request</li>
+<li>Consequently, POST should be used when dealing with sensitive data
+(e.g. passwords)</li>
+</ul>
+<hr><div id="nav">
+		<a href="https://edward2.solent.ac.uk/course/index.php">
+		<img src="week2_files/home.png" alt="Home">
+		</a>
+		</div>
+		<em>Font size:</em> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture2.xml&amp;unit=dfti&amp;fs=60">Small</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture2.xml&amp;unit=dfti&amp;fs=80">Normal</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture2.xml&amp;unit=dfti&amp;fs=100">Large</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture2.xml&amp;unit=dfti&amp;fs=120">V.large</a> <p></p>
+
+
+</div></body></html>

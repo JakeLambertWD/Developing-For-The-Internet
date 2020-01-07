@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="week3_files/dfti0910.css">
+<style type="text/css">
+body { font-size: 80%}
+</style>
+</head><body>
+<div id="sidebar">
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/index.php?unit=dfti">DFTI</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/wad/">WAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/mad/">MAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/ema/">EMA</a>
+</div>
+<div id="main">
+
+<div class="subtitle"><h1>PHP and Databases</h1></div><hr><p>Page 1</p><h1>PHP and Databases</h1>
+<ul>
+<li>Three Tier Architecture</li>
+<li>PHP and Databases - Basics</li>
+</ul>
+<hr><p>Page 2</p><h1>Your PHP Script as a Database Client</h1>
+<ul>
+<li>A PHP script can act as a database client</li> 
+<li>The script sends SQL queries to the database
+    <ul>
+    <li>These can be of any type, SELECT, INSERT, UPDATE, etc</li>
+    </ul>
+</li>
+<li>For a SELECT query, the database sends the results back to the script</li>
+</ul>
+<hr><p>Page 3</p><h1>Three-tier architecture</h1>
+<ul>
+<li>The PHP script acts as the <em>server</em> with respect to the 
+user's PC, but the <em>client</em> with respect to the database:
+<br>
+<img src="week3_files/db2.png" alt="Clients, servers, scripts and databases">
+<br>
+</li>
+<li>This is known as <em>three-tier</em> architecture</li>
+</ul>
+<hr><p>Page 4</p><h1>How a PHP script which connects to a database works</h1>
+<ol>
+<li><em>Connect to the database server</em> using an appropriate
+username and password </li>
+<li>Select the <em>database</em> to use</li>
+<li>Send a <em>query</em> to the database</li>
+<li>Receive the results from the database</li>
+<li>Go through the results, echoing them back to the ultimate
+client (i.e. the user's web browser)</li>
+</ol>
+<hr><p>Page 5</p><h1>Using Databases From PHP - General Steps</h1>
+<ol>
+<li>Connect to the database</li>
+<li>Send a query to the database</li>
+<li>Receive the results from the database</li>
+<li>Send the results, formatted in HTML, back to the browser</li>
+</ol>
+<hr><p>Page 6</p><h1>PHP Database Objects: PDO</h1>
+<ul>
+<li>The old way of querying a database involved slightly different code for MySQL,
+Oracle, Microsoft SQL Server, etc</li>
+<li>However, these days it's recommended instead to use
+<em>PHP Database Objects - PDO</em>
+</li>
+<li>Use of PDO allows the same code to be used independently of what the database server is:
+the only thing that needs to be changed is a single string specifying the database server</li>
+<li>It also comes with a number of security measures built-in, such as the use of
+<em>prepared statements</em>, which we will cover in a later topic</li>
+</ul>
+<hr><p>Page 7</p><h1>Example - Using SQL from within PHP</h1>
+<ul>
+<li>Imagine we had the following database table called 
+<em>students</em> within a database called <em>student_records</em>
+with four columns <em>ID</em>, <em>name</em>, <em>phone</em> and 
+<em>course</em>:
+<pre> 
+ID              name            phone           course
+==              ====            =====           ======
+1               Mark Jones      07111 111111    Computer Network Management
+2               Rob Price       07222 222222    Software Engineering
+3               Lisa Burnside   07444 444444    Software Engineering
+4               Janet Williams  07333 333333    Internet Development</pre>
+</li>
+<li>The following PHP example will search this database table for all 
+students on the course that the user entered and retrieve all matching 
+records</li>
+</ul>
+<hr><p>Page 8</p><h1>Example - Using SQL from within PHP</h1>
+<pre>&lt;html&gt; &lt;body&gt;
+&lt;h1&gt;Database results!&lt;/h1&gt;
+<span class="php">&lt;?php
+
+$a = $_GET["course"];
+$conn = new PDO("mysql:host=localhost;dbname=student_records;", "username","password");
+
+
+$results = $conn-&gt;query("select * from students where course='$a'");
+while($row=$results-&gt;fetch())
+{
+    echo "&lt;p&gt;";
+    echo " Student ID ". $row["ID"] ."&lt;br/&gt; ";
+    echo " Name " . $row["name"] . "&lt;br/&gt; " ; 
+    echo " Phone " .$row["phone"]. "&lt;br/&gt;" ; 
+    echo "&lt;/p&gt;";
+}
+
+
+?&gt;</span>
+&lt;/body&gt; &lt;/html&gt;
+</pre>
+<hr><p>Page 9</p><h1>Summary of example</h1>
+<ul>
+<li>First we <em>connect to the database server</em> using an appropriate
+username and password and select an appropriate database (<strong>student_records</strong> in our case)
+    <ul>
+    <li><em>localhost</em> means that the database server is on the same 
+    machine as the web server running the PHP script</li> 
+    </ul>
+</li>
+<li>Then we send a <em>query</em> to the database, to search for all
+students on a given course</li>
+<li>The database sends back the matching records, storing them in $result</li>
+<li>Finally we loop through the matching records, one row at a time, echoing 
+them back to the user's web browser</li>
+</ul>
+<hr><p>Page 10</p><h1>The script in more detail (1)-
+Connecting to a MySQL server</h1>
+<ul>
+<li>Syntax:
+<pre>$conn = new PDO("mysql:host=localhost;dbname=student_records", "username","password");
+</pre>
+</li>
+<li>We create a new PDO connection, specifying three pieces of information:
+    <ul>
+    <li>The <em>connection string</em>, mysql:host=localhost;dbname=student_records;</li>
+    <li>The <em>username</em> and the <em>password</em> for the database.</li>
+    </ul>
+</li>
+
+<li>The connection string is where we specify the database server we're using 
+(mysql as opposed to say Oracle or Microsoft SQL Server),
+the machine the database is running on (<em>localhost</em> means that the database 
+server is on the same machine as the web server running the script) and
+the actual database we're using <em>student_records</em>
+    <ul>
+  <li>Revision:
+   One <em>database server</em> (MySQL system) may contain several actual 
+   <em>databases</em>
+   </li>
+   </ul>
+</li>
+<li>This will log on to the database server with a username of 
+<em>username</em> and password of <em>password</em></li>
+<li>Technically, what we are doing with <em>new PDO</em> is creating a new PDO <em>object</em>
+    <ul>
+    <li>Those of you doing Java will know about the concept of objects; for everyone else, we will
+    return to it later in the unit</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 11</p><h1>The script in more detail (2) - Querying a database</h1>
+<ul>
+<li>We can send an SQL query to a database within PHP using PDO</li>
+<li>Syntax:
+<pre>$results = $conn-&gt;query("SQL QUERY");
+</pre>
+</li>
+<li>e.g.
+<pre>$results = $conn-&gt;query("select * from students where course='$a'");
+</pre>
+</li>
+<li>This selects the records from the table <em>students</em> where the
+value in the <em>name</em> column matches the name that the user entered in
+the form (i.e. $a)</li>
+<li>In other words, it selects the records where the name matches the name
+that the user entered on the form</li>
+<li><em>$results</em> represents the set of results returned from the
+database</li> 
+</ul>
+<hr><p>Page 12</p><h1>The script in more detail (3) - Interpreting the Result</h1>
+<ul>
+<li>Each matching row from the set of results is fetched in turn, using <em>fetch()</em>:
+<pre>while($row = $results-&gt;fetch())</pre>
+</li>
+<li>e.g:
+<pre><span class="php">
+while($row=$results-&gt;fetch())
+{
+    echo "&lt;p&gt;";
+    echo " Student ID ". $row["ID"] . "&lt;br/&gt; ";
+    echo " Name " . $row["name"] . "&lt;br/&gt; " ; 
+    echo " Phone " . $row["phone"] . "&lt;br/&gt;" ; 
+    echo "&lt;/p&gt;";
+}
+</span></pre>
+</li>
+<li>Each row is fetched into the variable $row</li>
+<li>The column names from the database go inside the square brackets [ ] </li>
+<li><strong>$row["phone"]</strong> means the value of the <em>phone</em>
+column from the current record</li>
+<li><strong>$row["email"]</strong> means the value of the <em>email</em>
+column from the current record</li>
+<li>Note also the dot operator, <strong>.</strong>
+    <ul>
+    <li>This is the <em>string concatenation</em> operator in PHP, it is
+    used to join together strings and variables into one big string</li>
+    <li>It's the equivalent of <strong>+</strong> for strings</li>
+    </ul>
+</li>
+<li>When there are no more rows to fetch, <em>$results-&gt;fetch()</em> will return the
+value <em>false</em>, which will stop the loop
+    <ul>
+    <li>
+    <pre>while($row = $results-&gt;fetch())</pre>
+    is shorthand for
+    <pre>while(($row = $results-&gt;fetch()) != false)</pre>
+    where "!=" means "is not equal to", in other words we are looping while
+    <em>fetch()</em> does not return false
+    </li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 13</p><h1>Testing the success of a query</h1>
+<ul>
+<li>To test whether a query returned anything, we try to fetch the first row</li>
+<li>If this is unsuccessful, the boolean value <em>false</em> will be returned,
+rather than a valid row (as we saw above)</li>
+<li>So we can test for the first row being false to test for there being no
+matching rows</li>
+</ul>
+<hr><p>Page 14</p><h1>Testing the success of a query: example</h1>
+<ul>
+<li>Note how we change the position of the <em>fetch()</em> statement in the
+while loop. 
+</li>
+<li>This is because we initially try to fetch the first row, and
+if successful, $row will contain the first row.
+So, when we enter the while loop, we
+don't want to immediately fetch <em>another</em> row; we instead
+print out the current row and then fetch the next row.</li>
+</ul>
+<pre>&lt;html&gt; &lt;body&gt;
+&lt;h1&gt;Database results!&lt;/h1&gt;
+<span class="php">&lt;?php
+
+<strong>// Note that you will not be able to fully visualise this version with EPHP.
+// Avoid basing your code on this at first; use the example in p8 above instead.</strong>
+
+$a = $_GET["name"];
+$conn = new PDO("mysql:host=localhost;dbname=student_records;", "username","password");
+
+
+$results = $conn-&gt;query("select * from students where course='$a'");
+
+<em class="comment">// Try to fetch the first row. If there is no row, it will return the boolean false.</em>
+$row = $results-&gt;fetch();
+
+<em class="comment">// If $row is equal to the value "false", display an error</em>
+if ($row == false) 
+{
+    echo "No matching rows!";
+}
+else
+{
+    <em class="comment">// note that != means 'not equal to'</em>
+    while ($row != false) 
+    {
+        // display data from the database (not shown)... 
+        
+        // We now need to fetch the next row as it's not in the 'while'
+        $row = $results-&gt;fetch();
+    } 
+}
+?&gt;</span>
+&lt;/body&gt; &lt;/html&gt;
+</pre>
+<hr><p>Page 15</p><h1>Error handling</h1>
+<ul>
+<li>PHP scripts containing database queries might fail due to being unable to connect to the database
+(network down, database server not running, wrong connection information, etc)</li>
+<li>For this reason, a real PHP PDO script should handle errors</li>
+<li>There are two mechanisms for handling errors
+    <ul>
+    <li><em>Exception-based:</em> for when the error is due to incorrect connection information or
+    an external error such as a network problem</li>
+    <li><em>errorInfo:</em> used to trap errors in the SQL.</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 16</p><h1>errorInfo(): Trapping errors in the SQL</h1>
+<ul>
+<li>If there are errors in the actual SQL (e.g. incorrect table or column name),
+the above mechanism for trapping errors will not work
+</li>
+<li>In the case of SQL errors, we need to use the <em>errorInfo()</em> function to find out more details
+after the SQL statement</li>
+<li>Production code would not include this, but it is useful for debugging</li>
+<li>e.g code with a deliberate error in the SQL (no column called "fish" in the studentdetails 
+table):
+<pre>$results = $conn-&gt;query("SELECT * FROM students WHERE fish='haddock'");
+<em>print_r($conn-&gt;errorInfo());</em>
+</pre>
+</li>
+<li><em>errorInfo()</em> returns an <em>array</em> with three members</li>
+<li><em>print_r()</em> prints the entire contents of an array</li>
+<li>The third member (index 2; remember that arrays are indexed from 0) contains the actual message</li>
+</ul>
+<hr><div id="nav">
+		<a href="https://edward2.solent.ac.uk/course/index.php">
+		<img src="week3_files/home.png" alt="Home">
+		</a>
+		</div>
+		<em>Font size:</em> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture3.xml&amp;unit=dfti&amp;fs=60">Small</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture3.xml&amp;unit=dfti&amp;fs=80">Normal</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture3.xml&amp;unit=dfti&amp;fs=100">Large</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture3.xml&amp;unit=dfti&amp;fs=120">V.large</a> <p></p>
+
+
+</div></body></html>

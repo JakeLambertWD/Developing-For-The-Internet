@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="week8_files/dfti0910.css">
+<style type="text/css">
+body { font-size: 80%}
+</style>
+</head><body>
+<div id="sidebar">
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/index.php?unit=dfti">DFTI</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/wad/">WAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/mad/">MAD</a>
+<a class="sidebarentry" href="https://edward2.solent.ac.uk/course/ema/">EMA</a>
+</div>
+<div id="main">
+
+<div class="subtitle"><h1>Object-oriented PHP</h1></div><hr><p>Page 1</p><h1>Health Warning!!!</h1>
+<ul>
+<li>This topic is <em>more advanced</em> and is mostly geared towards those of
+you who want to do WAD and/or want to do web development in your career</li>
+<li>It is also necessary for <em>Task G</em> in the assignment, which is
+one of the options (besides AJAX) for obtaining an A</li>
+</ul>
+<hr><p>Page 2</p><h1>PHP objects: an introduction</h1>
+<ul>
+<li>
+Like Java, PHP features the concept of <em>objects</em>. </li>
+<li>An object is a complex data structure representing a real world entity, such as a person, a cat or a 
+web page element.</li>
+</ul>
+<hr><p>Page 3</p><h1>Classes and Objects</h1>
+<ul>
+<li>When doing object oriented-programming, you need to be aware of the difference between 
+<em>classes</em> and <em>objects</em>. </li>
+<li>A class is a general description, or blueprint, of something while an 
+object is a particular example, or instance, of that class. </li>
+<li>For example:
+    <ul>
+    <li>Dog is a class; Lassie, Fido and Bowser are Dog objects.</li>
+    <li>Popstar is a class; Madonna and Michael Jackson are Popstar objects.</li>
+    <li>Room is a class; RM602, RM603, RM605 and RM607 are Room objects.</li>
+    <li>Country is a class; the UK and Germany are Country objects.</li>
+    </ul>
+</li>
+</ul>
+<hr><p>Page 4</p><h1>Attributes and methods</h1>
+<ul>
+<li>Classes contain 
+<em>attributes</em> which describe objects of that class (e.g. the name and age of a person), and 
+<em>methods</em> which change the state of objects of that class 
+(e.g. if we have an object representing a car, we might have methods to start and stop the car).
+</li>
+<li> Methods are a specialised type of function which relate to objects.</li>
+</ul>
+<hr><p>Page 5</p><h1>Example of a class</h1>
+<p>Here is a simple example where we define a Student object representing a student.
+</p><pre>&lt;?php
+
+<em>
+class Student
+{
+    // Attributes
+    private $name;
+    private $course;
+    
+    // methods
+    function __construct($nameIn,$courseIn)
+    {
+        $this-&gt;name=$nameIn;
+        $this-&gt;course=$courseIn;
+    }
+
+    function display()
+    {
+        echo "Name " . $this-&gt;name . " Course " .$this-&gt;course;
+        echo "&lt;br /&gt;";
+    }
+};
+</em>
+
+$student1 = new Student("John" , "Software Engineering");
+$student2 = new Student("Surjan" , "Web Design");
+$student1-&gt;display();
+$student2-&gt;display();
+?&gt;
+</pre>
+<p></p>
+<hr><p>Page 6</p><h1>How the example works</h1>
+<ul>
+<li>
+The actual Student class is the section of code highlighted.</li>
+<li>We create a class called Student and then define the <em>constructor</em>
+ with __construct(). </li>
+<li>The constructor is a special piece of code which runs when we create a new object of that class. 
+It initialises the name and course of a student to a name and course passed in from outside.  </li>
+<li>Note that <em>$this</em> is a reference to the current object and the arrow -&gt; 
+is used to select the attribute or method we're currently referring to.</li>
+<li> The highlighted code does not create any objects; it merely defines how a Student class works.
+</li>
+<li>
+The actual object creation is
+done instead in the code below:
+<pre>$student1 = new Student("John" , "Software Engineering");
+$student2 = new Student("Surjan" , "Web Design");
+</pre>
+</li>
+</ul>
+<hr><p>Page 7</p><h1>More on how the example works</h1>
+<ul>
+<li>
+Note the use of the keyword <em>new</em> 
+to create new objects of the Student class. Two new objects, student1 and student2, are created. 
+</li>
+<li>When we create a Student object, the constructor (see above) is called to initialise the objects.
+</li>
+<li> Note how, for the first object, we pass the values "John" and "Software Engineering" to the constructor. The parameters to the 
+constructor, $nameIn and $courseIn, will take on the values "John" and "Software Engineering" 
+respectively, as these are the two pieces of information that have been passed in. The constructor then 
+sets the name and course attributes to these two values. </li>
+<li>
+Therefore, the object $student1 will have a name attribute of "John" and a course attribute of 
+"Software Engineering".</li>
+<li>Finally we call each student's display() method:
+<pre>$student1-&gt;display();
+$student2-&gt;display();
+</pre>
+As can be seen from the class, the display method displays the details of that student.
+</li>
+</ul>
+<hr><p>Page 8</p><h1>Another example: a Dog class</h1>
+<pre>&lt;?php
+class Dog
+{
+    private $name, $weight;
+    function __construct($nameIn,$weightIn)
+    {
+        $this-&gt;name=$nameIn;
+        $this-&gt;weight=$weightIn;
+    }
+
+    
+    function display()
+    {
+        echo $this-&gt;name . " " . $this-&gt;weight . "&lt;br /&gt;";
+    }
+
+    function walk()
+    {
+        if($this-&gt;weight &gt; 10)
+        {
+            $this-&gt;weight --;
+        }
+        else
+        {                
+            echo("The poor dog will be half starved ".
+                    "if you walk it that far!!!");
+        }
+    }
+};
+
+$dog1 = new Dog("Fido", 11);
+$dog2 = new Dog("Lassie", 13);
+$dog1-&gt;display();
+$dog2-&gt;display();
+$dog1-&gt;walk();
+$dog1-&gt;display();
+$dog1-&gt;walk();
+$dog1-&gt;display();
+
+?&gt;
+</pre>
+<hr><p>Page 9</p><h1>Notes on the Dog Example</h1>
+<ul>
+<li>
+Note how the walk() method of Dog is defined in the class. It simulates walking the dog by reducing the 
+weight by one, but if the weight goes below 10, the dog refuses to walk as he/she doesn't want to starve!!!
+</li>
+<li>This illustratrates the general concept of <em>data hiding</em></li>
+<li>The attributes are <em>private</em>, meaning that the outside world cannot access them</li>
+<li>The only way of accessing the attributes is via the methods</li>
+<li>This technique prevents the outside world arbitrarily manipulating the attributes, for example
+we cannot set the weight to below 10 directly with code such as:
+<pre>$dog-&gt;weight = 0;</pre>
+</li>
+<li>The methods describe the permitted operations on the attributes, preventing unrealistic
+things happening</li>
+</ul>
+<hr><p>Page 10</p><h1>Methods with Parameters</h1>
+<ul>
+<li>
+In the previous example, the 
+<em>walk()</em>method always has the same effect: the dog's weight is reduced by one. 
+</li>
+<li>However, the walk() method could be made more sophisticated: we might want to vary the distance the 
+dog walks</li>
+<li>We could do this by supplying a <em>parameter</em> to the walk() method, 
+which specifies the distance to walk</li>
+<li> The following extract illustrates this:
+<pre>function walk($distance)
+{
+    if($this-&gt;weight-$distance &gt; 10)
+    {
+        $this-&gt;weight -= $distance;
+    }
+    else
+    {                
+        echo("The poor dog will be half starved ".
+                    "if you walk it that far!!!");
+    }
+}
+</pre>
+</li>
+<li>We would then call the method in this way (assuming $dog is a Dog object:
+<pre>$dog2-&gt;walk(2);
+</pre>
+</li>
+</ul>
+<hr><p>Page 11</p><h1>Including PHP classes</h1>
+<ul>
+<li>The examples above showed the class and the code which creates objects of that class in the same
+file</li>
+<li>Commonly, however, each PHP class is saved in its own file (so it can be <em>reused</em>) and then included
+into other scripts</li>
+<li>e.g. Dog.php might contain a Dog class:
+<pre>&lt;?php
+// Dog.php
+
+class Dog
+{
+    private $name, $weight;
+    function __construct($nameIn,$weightIn)
+    {
+        $this-&gt;name=$nameIn;
+        $this-&gt;weight=$weightIn;
+    }
+
+    
+    function display()
+    {
+        echo $this-&gt;name . " " . $this-&gt;weight . "&lt;br /&gt;";
+    }
+
+    function walk()
+    {
+        if($this-&gt;weight &gt; 10)
+        {
+            $this-&gt;weight --;
+        }
+        else
+        {                
+            echo("The poor dog will be half starved ".
+                    "if you walk it that far!!!");
+        }
+    }
+};
+?&gt;
+</pre>
+and that would be included into other scripts, e.g.:
+<pre>&lt;?php
+include("Dog.php");
+$dog1 = new Dog("Fido", 11);
+$dog2 = new Dog("Lassie", 13);
+$dog1-&gt;display();
+$dog2-&gt;display();
+$dog1-&gt;walk();
+$dog1-&gt;display();
+$dog1-&gt;walk();
+$dog1-&gt;display();
+?&gt;
+</pre>
+</li>
+</ul>
+<hr><p>Page 12</p><h1>Typical uses of PHP classes and objects</h1>
+<ul>
+<li>Class to represent a database connection
+    <ul>
+    <li><em>PDO</em>, which you have been using all along, is actually a class to represent
+    a PDO database connection</li>
+    </ul>
+</li>
+<li><em>WebPage</em> class to represent a web page</li>
+<li>Classes to represent entities from databases, for example in 
+HitTastic!, we could have a Hit class, so that when we query the database
+for all songs by a given artist, we could store the results in an array
+of <em>Hit</em> objects</li>
+<li>So-called <em>Data Access Objects</em> are used when accessing databases,
+part of the <em>Model-View-Controller</em> pattern</li>
+</ul>
+<hr><p>Page 13</p><h1>Example of a class to represent a database entity: Person</h1>
+<pre>&lt;?php
+// Person.php
+// File containing the Person class
+
+class Person
+{
+    private $conn; // the PDO connection
+    private $id; // the person ID
+    private $row; // the row representing this Person
+    
+    
+    public function __construct($conn, $id)
+    {
+        $this-&gt;conn = $conn;
+        $stmt = $this-&gt;conn-&gt;prepare
+            ("SELECT * FROM people WHERE id=?");
+        $stmt-&gt;bindParam (1, $id);
+        $stmt-&gt;execute();
+        $this-&gt;row = $stmt-&gt;fetch();
+    }
+    
+    public function getName()
+    {
+        return $this-&gt;row["name"];
+    }
+    
+    public function getAge()
+    {
+        return $this-&gt;row["age"];
+    }
+    
+    public function getAddress()
+    {
+        return $this-&gt;row["address"];
+    }
+    
+    public function getPhone()
+    {
+        return $this-&gt;row["phone"];
+    }
+    
+    public function updateDetails($newAddress, $newPhone)
+    {
+        $stmt = $this-&gt;conn-&gt;prepare
+            ("UPDATE people SET address=?, phone=? WHERE id=?");
+        $stmt-&gt;bindParam (1, $newAddress);
+        $stmt-&gt;bindParam (2, $newPhone);
+        $stmt-&gt;bindParam (3, $this-&gt;id);
+    }
+}
+?&gt;
+</pre>
+Script using the Person class:
+<pre>&lt;?php
+include("Person.php");
+
+$conn=new PDO("mysql:host=localhost;dbname=peopledb", "username", "password");
+
+$person = new Person ($conn, 123); // a Person object representing the Person with ID 123
+echo $person-&gt;getName() . " " . $person-&gt;getAge(); // display details of Person
+$person-&gt;updateDetails("123 Richmond Road", "07722444888"); // update address and phone number
+?&gt;
+</pre>
+<ul>
+<li>Note how the constructor loads the row corresponding to the Person with that
+ID into the attribute <em>$row</em>, and the get...() methods return the corresponding fields from the row</li>
+<li>Note also how updateDetails() performs the corresponding database UPDATE query</li>
+<li>The advantage of this approach is that it keeps your PHP scripts "clean" and free from SQL queries;
+your PHP scripts call methods of the Person class rather than doing the SQL queries directly</li>
+<li>This makes your code easier to read and maintain, and, by keeping all the SQL in one place,
+enhances security as there are less places in your code where you need to worry about SQL injection</li>
+<li>The benefits of this are limited in the small PHP applications that you
+have been working on so far, but in larger web applications, where we wish
+to perform many operations on data returned from a database, storing the
+data entities as objects can lead to cleaner, and easier to maintain, code
+</li>
+</ul>
+<hr><p>Page 14</p><h1>Further reading</h1>
+<p>See <a href="https://edward2.solent.ac.uk/course/resources.php?unit=dfti&amp;file=OOPHP2.xml">these further notes</a> on more advanced OO PHP.</p>
+<hr><div id="nav">
+		<a href="https://edward2.solent.ac.uk/course/index.php">
+		<img src="week8_files/home.png" alt="Home">
+		</a>
+		</div>
+		<em>Font size:</em> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture8.xml&amp;unit=dfti&amp;fs=60">Small</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture8.xml&amp;unit=dfti&amp;fs=80">Normal</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture8.xml&amp;unit=dfti&amp;fs=100">Large</a> <a href="https://edward2.solent.ac.uk/course/resources.php?file=lecture8.xml&amp;unit=dfti&amp;fs=120">V.large</a> <p></p>
+
+
+</div></body></html>
